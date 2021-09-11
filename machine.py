@@ -1,6 +1,7 @@
 from products import Products
 
 
+# Initialize vending machine products
 products = Products()
 
 
@@ -10,6 +11,7 @@ def show_products():
 
 
 def select_product():
+    """Ask the customer to select the product he/she wants to buy."""
     id = -1
     while id not in products.get_product_ids() and id != 100:
         try:
@@ -25,6 +27,7 @@ def select_product():
         return products.get_product_by_id(id)
 
 def get_money_inserted(product):
+    """Ask the customer to insert money until the sum exceeds tho selected product's price."""
     sum = 0
     print('\nYour product ({}) costs {}€. Please insert cash into the machine until the sum exceeds product cost.'.format(product.name, product.price))
     while sum < product.price:
@@ -36,10 +39,12 @@ def get_money_inserted(product):
     return round(sum, 2)
 
 def get_money_returned(inserted_sum, product_price):
+    """Calculate the returned change."""
     return round(inserted_sum-product_price, 2)
 
 
 def transaction():
+    """Run the vending machine in a loop, where each iteration stands for a single transaction. """
     while True:
         print('### Welcome to The Vending Machine! ###')
         show_products()
@@ -57,6 +62,7 @@ def transaction():
         print('\nTransaction completed. Thank you!\n\n\n')
 
 
+# Start the vending machine
 if __name__ == '__main__':
     print('Starting vending machine...\n\n')
     transaction()

@@ -1,1 +1,5 @@
-# vending-machine-assignment
+# The Vending Machine
+
+## How to use it?
+
+Simply run `python machine.py`. No additional python libraries are required (tested on Python3.9).

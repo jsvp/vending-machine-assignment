@@ -3,13 +3,14 @@ import random
 
 
 class Products:
+    """Class to handle vending machine's available products."""
 
     def __init__(self):
         self.products = []
         self.read_products()
 
     def read_products(self):
-        """Read available products from file"""
+        """Read available products from file."""
         with open('products.csv', newline='') as f:
             for row in csv.DictReader(f, delimiter='|'):
                 p = Product(
@@ -22,6 +23,7 @@ class Products:
         print('{} products initialized.'.format(len(self.products)))
 
     def show(self):
+        """Print all products, each one on it's own line."""
         for p in self.products:
             p.show()
 
@@ -40,6 +42,7 @@ class Products:
 
 
 class Product:
+    """Class to handle a single product."""
 
     def __init__(self, id, name, price, description=''):
         self.id = int(id)
@@ -47,12 +50,9 @@ class Product:
         self.price = round(float(price), 2)
         self.description = description or '<No description>'
 
-    def show(self, return_string=False):
-        msg = '{id} \t {name:<10s} \t {price} \t {desc}'.format(id=self.id, name=self.name, price=self.price, desc=self.description)
-        if return_string:
-            return msg
-        else:
-            print(msg)
+    def show(self):
+        """Print product information."""
+        print('{id} \t {name:<10s} \t {price} \t {desc}'.format(id=self.id, name=self.name, price=self.price, desc=self.description))
 
 
 if __name__ == '__main__':
