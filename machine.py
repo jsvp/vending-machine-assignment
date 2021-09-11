@@ -15,12 +15,14 @@ def select_product():
     id = -1
     while id not in products.get_product_ids() and id != 100:
         try:
-            id = int(input('\nPlease, select a product by ID (100 for random choice): '))
+            id = int(input('\nPlease, select a product by ID (100 for random choice, 99 to cancel transaction): '))
         except ValueError:
             print('The id was not valid. Select "0" to see the product list again.')
             continue
         if id == 0:
             show_products()
+        elif id == 99:
+            return None
     if id == 100:
         return products.get_random_product()
     else:
@@ -43,26 +45,30 @@ def get_money_returned(inserted_sum, product_price):
     return round(inserted_sum-product_price, 2)
 
 
-def transaction():
-    """Run the vending machine in a loop, where each iteration stands for a single transaction. """
+def main():
+    """Run the vending machine in a loop where each iteration stands for a single transaction."""
     while True:
         print('### Welcome to The Vending Machine! ###')
         show_products()
 
         product = select_product()
-        print('You selected the following product:')
-        product.show()
+        if product is None:
+            print('\nTransaction canceled.\n\n\n')
+            continue
+        else:
+            print('You selected the following product:')
+            product.show()
 
-        money_inserted = get_money_inserted(product)
-        print('You inserted a total of {}€'.format(money_inserted))
+            money_inserted = get_money_inserted(product)
+            print('You inserted a total of {}€'.format(money_inserted))
 
-        money_returned = get_money_returned(money_inserted, product.price)
-        print('You will be returned {}€'.format(money_returned))
+            money_returned = get_money_returned(money_inserted, product.price)
+            print('You will be returned {}€'.format(money_returned))
 
-        print('\nTransaction completed. Thank you!\n\n\n')
+            print('\nTransaction completed. Thank you!\n\n\n')
 
 
 # Start the vending machine
 if __name__ == '__main__':
     print('Starting vending machine...\n\n')
-    transaction()
+    main()
