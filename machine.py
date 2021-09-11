@@ -31,10 +31,13 @@ def select_product():
 def get_money_inserted(product):
     """Ask the customer to insert money until the sum exceeds tho selected product's price."""
     sum = 0
-    print('\nYour product ({}) costs {}€. Please insert cash into the machine until the sum exceeds product cost.'.format(product.name, product.price))
+    print('\nYour product ({}) costs {}€. Please insert cash into the machine until the sum exceeds product cost. To cancel transaction, insert a negative value.'.format(product.name, product.price))
     while sum < product.price:
         try:
             inserted = float(input('- Total sum: {}€. Insert more: '.format(sum)).replace(',', '.'))
+            # If negative value, return current sum to indicate that the customer want's to cancel transaction.
+            if inserted < 0:
+                return sum
             sum += inserted
         except ValueError:
             print('Only numeric values are accepted.')
@@ -55,17 +58,23 @@ def main():
         if product is None:
             print('\nTransaction canceled.\n\n\n')
             continue
-        else:
-            print('You selected the following product:')
-            product.show()
 
-            money_inserted = get_money_inserted(product)
-            print('You inserted a total of {}€'.format(money_inserted))
+        # Continue by asking customer to insert money
+        print('You selected the following product:')
+        product.show()
 
-            money_returned = get_money_returned(money_inserted, product.price)
-            print('You will be returned {}€'.format(money_returned))
+        money_inserted = get_money_inserted(product)
+        if money_inserted < product.price:
+            print('\nTransaction canceled. The inserted money ({}€) is returned.\n\n\n'.format(money_inserted))
+            continue
 
-            print('\nTransaction completed. Thank you!\n\n\n')
+        # Continue and finish the transaction by returning the change.
+        print('You inserted a total of {}€'.format(money_inserted))
+
+        money_returned = get_money_returned(money_inserted, product.price)
+        print('You will be returned {}€'.format(money_returned))
+
+        print('\nTransaction completed. Thank you!\n\n\n')
 
 
 # Start the vending machine

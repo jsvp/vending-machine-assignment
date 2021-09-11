@@ -52,7 +52,7 @@ class Product:
 
     def show(self):
         """Print product information."""
-        print('{id} \t {name:<10s} \t {price} \t {desc}'.format(id=self.id, name=self.name, price=self.price, desc=self.description))
+        print('{id} \t {name:<10s} \t {price}€ \t {desc}'.format(id=self.id, name=self.name, price=self.price, desc=self.description))
 
 
 if __name__ == '__main__':
